@@ -1,35 +1,52 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 
+type CatFact = {
+  createdAt: string;
+  deleted: boolean;
+  source: string;
+  status: { verified: boolean; sentCount: number };
+  text: string;
+  type: string;
+  updatedAt: Date;
+  used: boolean;
+  user: string;
+  __v: number;
+  _id: string;
+};
+
 function getCatFact() {
-	fetch("https://cat-fact.herokuapp.com/facts")
-		.then((response) => {
-			console.log(response);
-		})
-		.catch((error) => {
-			console.log(error);
-		});
+  return fetch("https://cat-fact.herokuapp.com/facts")
+    .then(async (response) => {
+      const data = (await response.json()) as CatFact[];
+      console.log(data);
+      return data;
+    })
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
 }
 
 function CatFactView() {
-	const [catFact, setCatFact] = useState("empty");
-	// Set use effect
+  const [catFact, setCatFact] = useState<CatFact[] | undefined>();
+  // Set use effect
 
-	useEffect(() => {
-		//runs on mount
+  useEffect(() => {
+    //runs on mount
 
-		const catFact = getCatFact();
+    const catFact = getCatFact().then(setCatFact);
 
-		return () => {
-			// runs on unmount
-		};
-	}, []);
+    return () => {
+      // runs on unmount
+    };
+  }, []);
 
-	return (
-		<View>
-			<Text>Not a cat fact</Text>
-		</View>
-	);
+  return (
+    <View>
+      <Text>{JSON.stringify(catFact)}</Text>
+    </View>
+  );
 }
 
 export default CatFactView;
