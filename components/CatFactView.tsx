@@ -33,13 +33,14 @@ function getCatFact(factAmount: string) {
 type CatFactViewProps = {
 	factAmount?: string;
 };
-function CatFactView({ factAmount }: CatFactViewProps) {
-	const [catFact, setCatFact] = useState<CatFact[] | undefined>();
+
+function CatFactList({ factAmount }: CatFactViewProps) {
+	const [catFacts, setCatFacts] = useState<CatFact[] | undefined>();
 
 	useEffect(() => {
 		//runs on mount
 
-		getCatFact(factAmount ? factAmount : "1").then(setCatFact);
+		getCatFact(factAmount ? factAmount : "1").then(setCatFacts);
 
 		return () => {
 			// runs on unmount
@@ -48,11 +49,18 @@ function CatFactView({ factAmount }: CatFactViewProps) {
 
 	return (
 		<View>
-			<Text>{JSON.stringify(catFact)}</Text>
+			<Text>Cat Facts:</Text>
+			{catFacts?.map((fact, index) => {
+				return (
+					<Text key={fact._id}>
+						{index + 1}) {fact.text}
+					</Text>
+				);
+			})}
 		</View>
 	);
 }
 
-export default CatFactView;
+export default CatFactList;
 
 const styles = StyleSheet.create({});

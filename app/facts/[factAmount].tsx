@@ -1,4 +1,4 @@
-import CatFactView from "@/components/CatFactView";
+import CatFactList from "@/components/CatFactView";
 import { useLocalSearchParams } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 
@@ -7,7 +7,7 @@ export default function SingleFactScreen() {
 
 	return (
 		<View style={styles.container}>
-			<CatFactView factAmount={factAmount} />
+			<CatFactList factAmount={factAmount} />
 		</View>
 	);
 }
