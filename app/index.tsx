@@ -1,9 +1,10 @@
+import CatFactView from "@/components/CatFactView";
 import { StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
 	return (
 		<View style={styles.container}>
-			<Text>Cat App</Text>
+			<CatFactView />
 		</View>
 	);
 }
